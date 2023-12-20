@@ -1,4 +1,5 @@
 import discord.ext.commands as commands
+import utils.utils as utils
 
 
 class Hello(commands.Cog):
@@ -11,7 +12,22 @@ class Hello(commands.Cog):
 
     @commands.command(aliases=["hi", "hello", "hlo"])
     async def hello_world(self, ctx):
-        await ctx.send(f"Hello {ctx.author.name}")
+        if utils.user_authenticated(ctx.author.id) and utils.server_authenticated(
+            ctx.guild.id
+        ):
+            await ctx.send(
+                f"Hello {ctx.author.mention}, How are You? I am fine Thank You"
+            )
+        else:
+            if not utils.server_authenticated(ctx.guild.id):
+                if not utils.user_authenticated(ctx.author.id):
+                    await ctx.send(
+                        f"You're not authenticated {ctx.author.mention} and Server {ctx.guild.name} is not authenticated"
+                    )
+                else:
+                    await ctx.send(f"Server {ctx.guild.name} is not authenticated")
+            else:
+                await ctx.send(f"You're not authenticated {ctx.author.mention}")
 
 
 async def setup(client):

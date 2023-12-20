@@ -17,6 +17,10 @@ class DBManager(ABC):
         pass
 
     @abstractmethod
+    def is_present(self):
+        pass
+
+    @abstractmethod
     def truncate(self):
         pass
 
@@ -42,6 +46,27 @@ class ServerAuthDBManager(DBManager):
             return True
         except sqlite3.Error as e:
             print(e)
+            return False
+
+    def is_present(self, token: str) -> bool:
+        try:
+            query = """SELECT 1 FROM Server WHERE token=? LIMIT 1"""
+            self.cursor.execute(query, (token,))
+            result = self.cursor.fetchone()
+
+            if result:
+                print("Data is present in Server DB")
+                return True
+            else:
+                print("Data is not present in Server DB")
+                return False
+
+        except sqlite3.IntegrityError as e:
+            print(f"IntegrityError: {e}")
+            return False
+
+        except sqlite3.Error as e:
+            print(f"SQLite Error: {e}")
             return False
 
     def truncate(self):
@@ -75,6 +100,27 @@ class UserAuthDBManager(DBManager):
             return True
         except sqlite3.Error as e:
             print(e)
+            return False
+
+    def is_present(self, token: str) -> bool:
+        try:
+            query = """SELECT 1 FROM User WHERE token=? LIMIT 1"""
+            self.cursor.execute(query, (token,))
+            result = self.cursor.fetchone()
+
+            if result:
+                print("Data is present in User DB")
+                return True
+            else:
+                print("Data is not present in User DB")
+                return False
+
+        except sqlite3.IntegrityError as e:
+            print(f"IntegrityError: {e}")
+            return False
+
+        except sqlite3.Error as e:
+            print(f"SQLite Error: {e}")
             return False
 
     def truncate(self):
