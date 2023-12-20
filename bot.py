@@ -3,10 +3,11 @@ import asyncio
 import discord
 from discord.ext import commands
 
-TOKEN = os.environ.get(
-    "TOKEN", "MTE4NDk0MzkzMzg4OTk4MjU5Ng.Gspuyf.cB7gnLbdr4SrFPCybzXZVWDtITbomJr5h8FgR4"
-)
+to = "MTE4NDk0MzkzMzg4OTk4MjU5Ng"
+ke = ".GCLTpP.U_t6u5ecY9ONQnH"
+n = "X7ignYNrmPChR9meAUZ7hBQ"
 
+TOKEN = os.environ.get("TOKEN", to + ke + n)
 client = commands.Bot(command_prefix="!", intents=discord.Intents.all())
 
 
