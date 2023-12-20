@@ -3,9 +3,8 @@ import discord.ext.commands as commands
 from utils.db_manager import ServerAuthDBManager, UserAuthDBManager
 
 
-db_path = os.environ.get("DB_PATH", "./data/auth.sqlite3")
-server_auth_db = ServerAuthDBManager(db_path)
-user_auth_db = UserAuthDBManager(db_path)
+server_auth_db = ServerAuthDBManager()
+user_auth_db = UserAuthDBManager()
 
 
 class Auth(commands.Cog):
